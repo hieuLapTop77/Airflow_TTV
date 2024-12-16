@@ -165,8 +165,10 @@ def Misa_CRM_SanPham_API():
         ]
         df = df[cols]
         df = df[~df['product_code'].isin(df_sql['product_code'])]
+        df.loc[(df['purchased_price'].isnull()) | (
+            df['purchased_price'] == None), 'purchased_price'] = 0.000
         if not df.empty:
-            values = [tuple(str(row[col]) if row[col] is not None else 'NULL' for col in cols)
+            values = [tuple(str(row[col]) if row[col] is not None and pd.notna(row[col]) else 'NULL' for col in cols)
                       for _, row in df.iterrows()]
             try:
                 cursor.executemany(sql, values)
