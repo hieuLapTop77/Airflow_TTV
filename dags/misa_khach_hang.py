@@ -4,7 +4,6 @@ import os
 import numpy as np
 import pandas as pd
 from airflow.decorators import dag, task
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.helper import download_file_drive
 from common.hook import hook

@@ -3,7 +3,6 @@ import json
 
 import pandas as pd
 from airflow.decorators import dag, task
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.helper import call_api_mutiple_pages, call_multiple_thread
 from common.hook import hook

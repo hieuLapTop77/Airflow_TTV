@@ -7,7 +7,6 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.models import Variable
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.helper import (
     call_api_get_list,

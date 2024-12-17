@@ -6,7 +6,6 @@ from datetime import datetime
 import pandas as pd
 import requests
 from airflow.decorators import dag, task
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.helper import call_query_sql
 from common.hook import hook

@@ -3,7 +3,6 @@ import json
 import requests
 from airflow.decorators import dag, task
 from airflow.models import Variable
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.variables import MISA_ACCESS_CODE, MISA_API_GET_TOKEN, MISA_APP_ID
 

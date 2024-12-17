@@ -4,7 +4,6 @@ from typing import Union
 import pandas as pd
 import requests
 from airflow.decorators import dag, task
-from airflow.operators.python import task
 from airflow.utils.dates import days_ago
 from common.hook import hook
 from common.variables import (
