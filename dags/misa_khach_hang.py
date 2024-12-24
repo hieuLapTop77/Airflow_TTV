@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.helper import download_file_drive
 from common.hook import hook
 from common.variables import FOLDER_ID_KHACHHANG, TEMP_PATH
@@ -20,7 +21,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="0 */4 * * *",
+    schedule_interval="20 * * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Misa", "khach hang"],

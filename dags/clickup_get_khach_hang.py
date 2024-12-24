@@ -4,6 +4,7 @@ import json
 import pandas as pd
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.helper import call_api_mutiple_pages, call_multiple_thread
 from common.hook import hook
 from common.variables import API_TOKEN, CLICKUP_GET_TASKS
@@ -20,7 +21,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="0 */12 * * *",
+    schedule_interval="40 */5 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Clickup ", "Customer", " khách hàng"],

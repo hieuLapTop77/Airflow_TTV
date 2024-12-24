@@ -5,6 +5,7 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.hook import hook
 from common.variables import (
     MISA_CRM_CLIENT_ID,
@@ -22,7 +23,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="5 */12 * * *",
+    schedule_interval="5 */3 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Misa", "Ton Kho", "Inventory"],
@@ -174,7 +175,7 @@ def Misa_CRM_SanPham_API():
                 print(
                     f"Inserted {len(values)} rows in database with {df.shape[0]} rows")
                 sql_conn.commit()
-            except Exception as e:
+            except KeyError as e:
                 print(f"An error occurred: {e}")
             finally:
                 sql_conn.close()

@@ -7,6 +7,7 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.helper import call_query_sql
 from common.hook import hook
 from common.variables import API_TOKEN, CLICKUP_CREATE_TASK
@@ -62,7 +63,7 @@ BODY_TEMPLATE = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="0 */4 * * *",
+    schedule_interval="10 */2 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Clickup", "khach hàng"],

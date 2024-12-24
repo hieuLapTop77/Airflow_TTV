@@ -8,6 +8,7 @@ import requests
 from airflow.decorators import dag, task
 from airflow.models import Variable
 from airflow.utils.dates import days_ago
+
 from common.helper import (
     call_api_get_list,
     call_api_mutiple_pages,

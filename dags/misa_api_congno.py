@@ -5,6 +5,7 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.hook import hook
 from common.variables import MISA_API_CONGNO, MISA_APP_ID, MISA_TOKEN
 
@@ -17,7 +18,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="5 */12 * * *",
+    schedule_interval="5 */3 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Misa", "cong no"],

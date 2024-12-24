@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
+
 from common.helper import (
     call_api_get_list,
     call_api_mutiple_pages,
@@ -32,7 +33,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="30 * * * *",
+    schedule_interval="30 */2 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Clickup", "Ban hang", 'space'],

@@ -11,7 +11,6 @@ from airflow.decorators import dag, task
 from airflow.models import Variable
 from airflow.utils.dates import days_ago
 
-# from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from common.helper import (
     call_api_get_list,
     call_api_mutiple_pages,
@@ -172,7 +171,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="30 */12 * * *",
+    schedule_interval="34 */4 * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Misa", "clickup", 'ban hang'],
