@@ -144,7 +144,7 @@ BODY_TEMPLATE = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="5 */3 * * *",
+    schedule_interval="*/30 * * * *",
     start_date=days_ago(1),
     catchup=False,
     tags=["Clickup", "Đơn hàng", "CRM"],
