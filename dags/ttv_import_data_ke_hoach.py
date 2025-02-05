@@ -1762,8 +1762,15 @@ def Ke_hoach_TTV():
                     ,[NHAN_HANG]
                     ,[NHOM_NHAN_HANG]
                     ,[GIA_DAI_LY]
-                    ,[HAN_SU_DUNG])
+                    ,[HAN_SU_DUNG] -- THOI_HAN_SU_DUNG
+                    ,[GIA_TT]
+                    ,[GIA_MT]
+                    ,[GIA_LOC_NUOC]
+                    ,[GIA_BCA]
+                    ,[GIA_ONLINE]
+                    ,[GIA_NIEM_YET])
                 VALUES  (
+                    %s, %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s, %s
                 )
         """
