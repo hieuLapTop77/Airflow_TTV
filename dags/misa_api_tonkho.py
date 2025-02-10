@@ -4,7 +4,6 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
-
 from common.hook import hook
 from common.variables import MISA_API_TONKHO, MISA_APP_ID, MISA_TOKEN
 
@@ -39,6 +38,18 @@ def Misa_API_TonKho():
             "take": 1000,
             "last_sync_time": None
         }
+        response = requests.post(MISA_API_TONKHO, headers=headers, json=body, timeout=None)
+        if response.status_code == 200:
+            data = json.loads(response.json().get("Data"))
+            if not data:
+                return
+            else:
+                sql_conn = hook.get_conn()
+                cursor = sql_conn.cursor()
+                sql_select = "truncate table [3rd_misa_api_tonkho]"
+                cursor.execute(sql_select)
+                sql_conn.commit()
+            
         while True:
             response = requests.post(
                 MISA_API_TONKHO, headers=headers, json=body, timeout=None)
@@ -77,9 +88,9 @@ def Misa_API_TonKho():
                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                         %s, %s, %s, getdate())
                 """
-        sql_select = "truncate table [3rd_misa_api_tonkho]"
-        cursor.execute(sql_select)
-        sql_conn.commit()
+        # sql_select = "truncate table [3rd_misa_api_tonkho]"
+        # cursor.execute(sql_select)
+        # sql_conn.commit()
         df = pd.DataFrame(data)
         cols = ['inventory_item_id', 'inventory_item_code', 'inventory_item_name', 'stock_id', 'stock_code', 'stock_name',
                 'organization_unit_id', 'organization_unit_code', 'organization_unit_name', 'quantity_balance', 'amount_balance',
