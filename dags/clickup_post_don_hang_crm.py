@@ -8,7 +8,6 @@ import pandas as pd
 import requests
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
-
 from common.helper import call_query_sql
 from common.hook import hook
 from common.variables import API_TOKEN, CLICKUP_CREATE_TASK
@@ -172,7 +171,7 @@ def Clickup_post_don_hang_crm():
             elif field["id"] == "8ab977da-44bf-44c1-b306-e19151675dd7":  # "Contact name"
                 field["value"] = df_row['contact_name'] if df_row['contact_name'] else None
             elif field["id"] == "bab5a15a-9298-46cb-9566-ecfa8f374145":  # "Deadline date"
-                field["value"] = df_row['deadline_date'] if df_row['deadline_date'] else "NULL"
+                field["value"] = df_row['deadline_date'] if df_row['deadline_date'] else None
             elif field["id"] == "e530feab-c5e1-4f88-8012-488212ee5764":  # "Description"
                 field["value"] = df_row['description'] if df_row['description'] else None
             elif field["id"] == "10a0c720-b367-47f0-93f6-79e7779ac78f":  # "Due date"
@@ -221,8 +220,9 @@ def Clickup_post_don_hang_crm():
     def create_task(df_row):
         main_task_payload = create_task_payload(df_row)
         for field in main_task_payload['custom_fields']:
-            if (field['name'] == 'Deadline date' or field['name'] == 'Due date') and (pd.isna(field['value']) or math.isnan(field['value'])):
-                field['value'] = None
+            if (field['name'] == 'Deadline date' or field['name'] == 'Due date'):
+                if pd.isna(field['value']) or (isinstance(field['value'], float) and math.isnan(field['value'])):
+                    field['value'] = None
         print("Body json: ", main_task_payload)
         res = requests.post(CLICKUP_CREATE_TASK.format(
             LIST_ID_TASK_DESTINATION), json=main_task_payload, headers=headers, timeout=None)
@@ -253,6 +253,7 @@ def Clickup_post_don_hang_crm():
         """
         print("Connection established")
         df = pd.read_sql(sql, sql_conn)
+        print(len(df))
         with concurrent.futures.ThreadPoolExecutor() as executor:
             executor.map(create_task, [
                          row for _, row in df.iterrows()])
